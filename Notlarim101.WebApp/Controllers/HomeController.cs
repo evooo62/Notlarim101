@@ -6,7 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using Notlarim101.BusinessLayer;
 using Notlarim101.Entity;
-using Notlarim101.WebApp.ViewModel;
+using Notlarim101.Entity.Messages;
+using Notlarim101.Entity.ValueObject;
+
 
 namespace Notlarim101.WebApp.Controllers
 {
@@ -70,7 +72,25 @@ namespace Notlarim101.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                NotlarimUserManager num = new NotlarimUserManager();
+                BusinessLayerResult<NotlarimUser> res = num.LoginUser(model);
+                if (res.Errors.Count>0)
+                {
+                    if (res.Errors.Find(x=>x.Code==ErrorMessageCode.UserIsNotActive)!=null)
+                    {
+                        ViewBag.SetLink = "http://Home/UserActivate/1234-2345-2345467";
+                    }
+
+                    res.Errors.ForEach(s=>ModelState.AddModelError("",s.Message));
+                    return View(model);
+                }
+                
+                Session["login"] = res.Result;//session a kullanici bilgilerini aktarma
+                return RedirectToAction("Index");//yonlendirme
+            }
+            return View(model);
         }
 
         public ActionResult Register()
@@ -83,6 +103,29 @@ namespace Notlarim101.WebApp.Controllers
             //bool hasError = false;
             if (ModelState.IsValid)
             {
+                NotlarimUserManager num = new NotlarimUserManager();
+                BusinessLayerResult<NotlarimUser> res = num.RegisterUser(model);
+
+                if (res.Errors.Count>0)
+                {
+                    res.Errors.ForEach(s=>ModelState.AddModelError("",s.Message));
+                    return View(model);
+                }
+
+                //try
+                //{
+                //    user = num.RegisterUser(model);
+                //}
+                //catch (Exception ex)
+                //{
+                //    ModelState.AddModelError("",ex.Message);
+                //}
+
+                //if (user==null)
+                //{
+                //    return View(model);
+                //}
+                //return RedirectToAction("RegisterOk");
                 //if (model.Username == "aaa" && model.Email == "aaa@aaa.com")
                 //{
                 //    ModelState.AddModelError("", "Kullanici adi kullaniliyor.");
@@ -120,6 +163,7 @@ namespace Notlarim101.WebApp.Controllers
                 //{
                 //    return RedirectToAction("RegisterOk");
                 //}
+                return RedirectToAction("RegisterOk");
             }
             return View(model);
         }
@@ -128,6 +172,36 @@ namespace Notlarim101.WebApp.Controllers
         {
             return View();
         }       
+        public ActionResult UserActivate(Guid id)
+        {
+            NotlarimUserManager num = new NotlarimUserManager();
+            BusinessLayerResult<NotlarimUser> res = num.ActvateUser(id);
+            if (res.Errors.Count>0)
+            {
+                TempData["errors"] = res.Errors;
+
+                return RedirectToAction("UserActivateCancel");
+            }
+            return RedirectToAction("UserActivateOk");
+        }
+        public ActionResult UserActivateOk()
+        {
+            return View();
+        }
+        public ActionResult UserActivateCancel()
+        {
+            List<ErrorMessageObj> errors = null;
+            if (TempData["errors"]!=null)
+            {
+                errors=TempData["errors"] as List<ErrorMessageObj>;
+            }
+            return View(errors);
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
+        }
 
 
     }

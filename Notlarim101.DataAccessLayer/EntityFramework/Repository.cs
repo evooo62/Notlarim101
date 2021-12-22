@@ -5,9 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Notlarim101.Common;
 using Notlarim101.Core.DataAccess;
 using Notlarim101.DataAccessLayer;
 using Notlarim101.DataAccessLayer.Abstract;
+using Notlarim101.Entity;
 
 namespace Notlarim101.DataAccessLayer.EntityFramework
 {
@@ -39,14 +41,31 @@ namespace Notlarim101.DataAccessLayer.EntityFramework
             return objSet.Where(query);
         }
 
-        public int Insert(T obj)
+        public int Insert(T obj)///Calisma mantigi sorulacak
         {
             objSet.Add(obj);
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                DateTime now = DateTime.Now;
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUsername = App.Common.GetCurrentUsername(); //"system"; 
+            }
             return Save();
         }
 
         public int Update(T obj)
         {
+            
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o=obj as MyEntityBase;
+                
+                o.ModifiedOn=DateTime.Now;
+                o.ModifiedUsername = App.Common.GetCurrentUsername();//"system";
+            }
+
             return Save();
         }
 

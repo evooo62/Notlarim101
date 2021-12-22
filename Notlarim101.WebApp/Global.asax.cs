@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Notlarim101.Common;
+using Notlarim101.WebApp.Init;
 
 namespace Notlarim101.WebApp
 {
@@ -13,6 +15,8 @@ namespace Notlarim101.WebApp
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            App.Common = new WebCommon();
         }
     }
 }

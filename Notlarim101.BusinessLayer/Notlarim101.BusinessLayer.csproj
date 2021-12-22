@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Notlarim101.BusinessLayer</RootNamespace>
     <AssemblyName>Notlarim101.BusinessLayer</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\ManagerBase.cs" />
+    <Compile Include="BusinessLayerResult.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CommentManager.cs" />
     <Compile Include="LikedManager.cs" />
@@ -65,6 +67,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Notlarim101.Common\Notlarim101.Common.csproj">
+      <Project>{17a885a1-3523-4055-9581-11950589c215}</Project>
+      <Name>Notlarim101.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Notlarim101.Core\Notlarim101.Core.csproj">
       <Project>{19e14e29-bb0a-4c59-a6aa-ad11b29ce6b7}</Project>
       <Name>Notlarim101.Core</Name>

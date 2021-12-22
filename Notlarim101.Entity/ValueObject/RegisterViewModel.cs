@@ -5,10 +5,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Notlarim101.WebApp.ViewModel
+namespace Notlarim101.Entity.ValueObject
 {
     public class RegisterViewModel
     {
+        [DisplayName("Adi"),
+         Required(ErrorMessage = "{0} alani bos gecilemez."),
+         StringLength(30, ErrorMessage = "{0} max. {1} karakter olmali.")]
+        public string Name { get; set; }
+        [DisplayName("Soyadi"),
+         Required(ErrorMessage = "{0} alani bos gecilemez."),
+         StringLength(30, ErrorMessage = "{0} max. {1} karakter olmali.")]
+        public string Surname { get; set; }
+
         [DisplayName("Kullanici Adi"), 
          Required(ErrorMessage = "{0} alani bos gecilemez."),
          StringLength(30, ErrorMessage = "{0} max. {1} karakter olmali.")]
@@ -22,7 +31,7 @@ namespace Notlarim101.WebApp.ViewModel
         [DisplayName("Sifre"),
          Required(ErrorMessage = "{0} alani bos gecilemez."),
          DataType(DataType.Password),
-         StringLength(30, ErrorMessage = "{0} max. {1} karakter olmali.")]
+         StringLength(30,MinimumLength = 3, ErrorMessage = "{0} max. {1} ile min {2} karakter arasinda olmali.")]
         public string Password { get; set; }
         [DisplayName("Sifre Tekrar"),
          Required(ErrorMessage = "{0} alani bos gecilemez."),
