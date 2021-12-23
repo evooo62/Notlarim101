@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using Notlarim101.BusinessLayer;
 using Notlarim101.Entity;
 using Notlarim101.Entity.Messages;
 using Notlarim101.Entity.ValueObject;
-
+using Notlarim101.WebApp.ViewModel;
 
 namespace Notlarim101.WebApp.Controllers
 {
@@ -163,7 +164,13 @@ namespace Notlarim101.WebApp.Controllers
                 //{
                 //    return RedirectToAction("RegisterOk");
                 //}
-                return RedirectToAction("RegisterOk");
+                OkViewModel notifyObj = new OkViewModel()
+                {
+                    Title = "Kayıt başaralı",
+                    RedirectingUrl = "/Home/Login",
+                };
+                notifyObj.Items.Add("Lütfen e-posta adresine gönderiğimiz aktivasyon linkine tıklaayarak hesabınızı aktive ediniz. Hesabınızı aktive etmeden not ekleyemez ve begenme yapamazsınız");
+                return View("Ok",notifyObj);
             }
             return View(model);
         }
@@ -197,6 +204,58 @@ namespace Notlarim101.WebApp.Controllers
             }
             return View(errors);
         }
+        public ActionResult ShowProfile()
+        {
+            NotlarimUser currentUser = Session["login"] as NotlarimUser;
+            NotlarimUserManager num = new NotlarimUserManager();
+            BusinessLayerResult<NotlarimUser> res = num.GetUserById ( currentUser.Id);
+            if (res.Errors.Count>0)
+            {
+                //kullanıcıyı bir hata ekranına yönlendiriceğiz.
+            }
+            return View(res.Result); //showprofile null fırlatmaması için içini dolduruyoruz.
+        }
+        public ActionResult EditProfile()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EditProfile(int id)
+        {
+
+            return View();
+        }
+        public ActionResult DeleteProfile()
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DeleteProfile(int id)
+        {
+            
+            return View();
+        }
+        //public ActionResult TestNotify()
+        //{
+        //    ErrorViewModel model = new ErrorViewModel()
+        //    {
+        //        Header = "Yönlendirme",
+        //        Title = "Basarılı",
+        //        IsRedirectingTimeout = 10000,
+        //        Items = new List<ErrorMessageObj>() 
+        //        { 
+        //            new ErrorMessageObj(){Message="Test Basarılı 1"},
+        //            new ErrorMessageObj(){Message="Test Basarılı 2"},
+        //        }
+        //    };
+        //    return View("Error", model);
+        //}
+    
+        
+        
+        
         public ActionResult Logout()
         {
             Session.Clear();

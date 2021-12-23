@@ -16,6 +16,8 @@ namespace Notlarim101.BusinessLayer
 
         private Repository<NotlarimUser> ruser = new Repository<NotlarimUser>();
 
+        
+
         public BusinessLayerResult<NotlarimUser> RegisterUser(RegisterViewModel data)
         {
             NotlarimUser user = ruser.Find(s => s.Username == data.Username || s.Email == data.Email);
@@ -44,6 +46,7 @@ namespace Notlarim101.BusinessLayer
                     Username = data.Username,
                     Email = data.Email,
                     Password = data.Password,
+                    ProfileImageFileName = "User1.jpeg",
                     ActivateGuid = Guid.NewGuid(),
                     IsActive = false,
                     IsAdmin = false,
@@ -51,7 +54,7 @@ namespace Notlarim101.BusinessLayer
                     //ModifiedOn = DateTime.Now,
                     //CreatedOn = DateTime.Now,
                     //ModifiedUsername = "system"
-                });
+                }); 
                 if (dbResult>0)
                 {
                     lr.Result = ruser.Find(s => s.Email == data.Email && s.Username == data.Username);
@@ -106,6 +109,17 @@ namespace Notlarim101.BusinessLayer
             else
             {
                 res.AddError(ErrorMessageCode.ActivateIdDoesNotExist, "Fuck Off Bitches");
+            }
+            return res;
+        }
+
+        public BusinessLayerResult<NotlarimUser> GetUserById(int id)
+        {
+            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            res.Result = ruser.Find(s => s.Id == id);
+            if (res.Result==null)
+            {
+                res.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı Bulunamadı");
             }
             return res;
         }
