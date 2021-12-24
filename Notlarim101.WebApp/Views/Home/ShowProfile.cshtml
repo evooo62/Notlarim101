@@ -6,33 +6,41 @@
 
 <div class="container">
     <div class="row">
-        <h2> @ViewBag.Title </h2>
-        
-        <hr />
+        <h2>@ViewBag.Title</h2>
     </div>
     <div class="row">
         <div class="col-md-2">
             <img src="~/images/@Model.ProfileImageFileName" class="rounded-circle" width="148" height="148" alt="Alternate Text" />
         </div>
         <div class="col-md-8">
-            <h3>@(Model.Name + " "+Model.Surname)</h3>
+            <h3>@(Model.Name +" "+ Model.Surname)</h3>
             <br />
-            <h6><b>Username:</b>@Model.Username </h6>
-            <h6><b>Email:</b>@Model.Email </h6>
+            <h6><b>Username : </b>@Model.Username</h6>
+            <h6><b>Email : </b>@Model.Email</h6>
             <br />
             <h6><a href="#">More...</a></h6>
         </div>
-        <div class="col-md-2 text-end">
-            <div class="btn-group">
-                <a href="#" class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+        @*<div class="col-md-2 text-end">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Seçenekler
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a href="@Url.Action("EditProfile")" class="dropdown-item">Düzenle</a></li>
+                    <li><a href="@Url.Action("DeleteProfile")" class="dropdown-item" onclick="return confirm('Are You Sure Remove This Account?');">Sil</a></li>
+                </ul>
+            </div>*@
+        </div>
+        @*<div class="btn-group">
+                <a href="#" class="btn dropdown-toggle btn-info" id="navbarDropdown" data-toggle="dropdown">
                     Options
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="@Url.Action("EditProfile")">Modify</a></li>
-                    <li><a href="@Url.Action("DeleteProfile")" onclick="return confirm('Are you sure remove this account')">Delete</a></li>
+                    <li><a href="@Url.Action("EditProfile")" class="dropdown-item">Düzenle</a></li>
+                    <li><a href="@Url.Action("DeleteProfile")" class="dropdown-item" onclick="return confirm('Are You Sure Remove This Account?');">Sil</a></li>
                 </ul>
-            </div>
-        </div>
+            </div>*@
+
     </div>
 </div>
 

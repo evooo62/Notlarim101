@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,18 +12,19 @@ namespace Notlarim101.Entity
     [Table("tblNotlarimUsers")]
     public class NotlarimUser:MyEntityBase
     {
-        [StringLength(30)]
+        [DisplayName("Ad") ,StringLength(30,ErrorMessage ="{0} alanı max.{1} karakter olmalıdır.")]
         public string Name { get; set; }
-        [StringLength(30)]
+        [DisplayName("Soyad"), StringLength(30, ErrorMessage = "{0} alanı max.{1} karakter olmalıdır.")]
         public string Surname { get; set; }
-        [StringLength(30),Required]
+        [DisplayName("Kullanıcı Adı"), StringLength(30, ErrorMessage = "{0} alanı max.{1} karakter olmalıdır.")]
         public string Username { get; set; }
-        [StringLength(100),Required]
+        [DisplayName("Email"),StringLength(100, ErrorMessage = "{0} alanı max.{1} karakter olmalıdır."),Required]
         public string Email { get; set; }
-        [StringLength(100),Required]
+
+        [DisplayName("Şifre"), StringLength(100, ErrorMessage = "{0} alanı max.{1} karakter olmalıdır."), Required]
         public string Password { get; set; }
 
-        [StringLength(30)]
+        [StringLength(30, ErrorMessage = "{0} alanı max.{1} karakter olmalıdır.")]
         public string ProfileImageFileName { get; set; }
         public bool IsActive { get; set; }
         [Required]

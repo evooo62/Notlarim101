@@ -22,34 +22,54 @@
         {
             user = Session["login"] as NotlarimUser;
         }
-
-
     }
+
+
+
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-1 px-lg-2">
-            <a class="navbar-brand" href="/home/index">NOTLARIM - 101</a>/
+            <a class="navbar-brand" href="/Home/Index">NOTLARIM - 101</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     @if (user != null)
                     {
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="bi bi-wrench"></i> Yonetim</a></li>
-                    }
+                        @*<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="bi bi-wrench"></i> Yonetim</a></li>*@
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-wrench"></i> Yonetim</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Note/Create">Not Ekle</a></li>
+                                <li role="separator" class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/Note/Index">Notlarim</a></li>
+                                <li><a class="dropdown-item" href="/Note/MyLikedNotes">Begendiklerim</a></li>
+                                @if (user.IsAdmin == true)
+                                {
+                                    <li role="separator" class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/Category/Create">Kategori Ekle</a></li>
+                                    <li><a class="dropdown-item" href="/Category/Index">Kategoriler</a></li>
+                                    <li role="separator" class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/NotlarimUser/Create">Kullanici Ekle</a></li>
+                                    <li><a class="dropdown-item" href="/NotlarimUser/Index">Kullanicilar</a></li>
+                                }
+                            </ul>
+                        </li>
+
+                    }
 
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="bi bi-suit-heart-fill"></i> En Beğenilenler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!"><i class="bi bi-pencil-square"></i> Son Yazılar</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!"><i class="bi bi-info-circle-fill"></i> Hakkımızda</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-currency-dollar"></i> Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                        </ul>
-                    </li>
+                    @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-currency-dollar"></i> Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li>*@
                 </ul>
                 @*<form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
@@ -61,15 +81,26 @@
                 <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
                     @if (user == null)
                     {
-                        <li class="nav-item"><a class="nav-link active" href="/home/login"><i class="fas fa-sign-in-alt"></i> Giriş</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/home/register"><i class="fas fa-user-plus"></i> Üye Ol</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/Home/Login"><i class="fas fa-sign-in-alt"></i> Giriş</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/Home/Register"><i class="fas fa-user-plus"></i> Üye Ol</a></li>
                     }
                     else
                     {
-                        <li class="nav-item"><a class="nav-link active" href="/Home/ShowProfile"><i class="fas fa-user-check"></i>@user.Username</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/home/logout"><i class="fas fa-sign-out-alt"></i> Çıkış</a></li>
-                    }
+                        @*<li class="nav-item"><a class="nav-link active" href="/Home/ShowProfile"><i class="fas fa-user-check"></i> @user.Username</a></li>
 
+                            <li class="nav-item"><a class="nav-link active" href="/Home/LogOut"><i class="fas fa-sign-out-alt"></i> Çıkış</a></li>*@
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="/Home/ShowProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-wrench"></i> @user.Username</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Home/ShowProfile">Profil Goster</a></li>
+                                <li role="separator" class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/Home/EditProfile">Profil Duzenle</a></li>
+                                <li><a class="dropdown-item" href="/Home/DeleteProfile" onclick="return confirm('Hesabınızı silmek istediğinize emin misiniz?');">Profil Sil</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="/Home/LogOut"><i class="fas fa-sign-out-alt"></i> Çıkış</a></li>
+                    }
 
                 </ul>
 

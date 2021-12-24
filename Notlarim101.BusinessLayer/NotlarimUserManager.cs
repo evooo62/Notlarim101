@@ -123,5 +123,57 @@ namespace Notlarim101.BusinessLayer
             }
             return res;
         }
+
+        public BusinessLayerResult<NotlarimUser> UpdateProfile(NotlarimUser data)
+        {
+            NotlarimUser user = ruser.Find(s => s.Id != data.Id && (s.Username == data.Username || s.Email == data.Email));
+            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            if (user!=null && user.Id!=data.Id)
+            {
+                if (user.Username==data.Username)
+                {
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExist,"Bu kullanıcı adı daha önce kaydedilmiştir");
+                }
+                if (user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessageCode.EmailalreadyExist, "Bu email daha önce kaydedilmiştir");
+                }
+                return res;
+            }
+            res.Result = ruser.Find(s => s.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.Username = data.Username;
+            if (!string.IsNullOrEmpty(data.ProfileImageFileName))
+            {
+                res.Result.ProfileImageFileName = data.ProfileImageFileName;
+            }
+            if (ruser.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessageCode.ProfileCouldNotUpdate, "Profil güncellenmedi.");
+            }
+            return res;
+        }
+
+        public BusinessLayerResult<NotlarimUser> RemoveUserById(int ıd)
+        {
+
+            NotlarimUser user = ruser.Find(s => s.Id==ıd);
+            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            if (user!=null)
+            {
+                if (ruser.Delete(user)==0)
+                {
+                    res.AddError(ErrorMessageCode.UserCouldNotFind, "Kullanıcı silinemedi");
+                }
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.UserCouldNotFind, "Kullanıcı bulunamadı");
+            }
+            return res;
+        }
     }
 }

@@ -1,0 +1,85 @@
+﻿
+
+@model Notlarim101.Entity.NotlarimUser
+
+@{
+    ViewBag.Title = "Profili düzenle";
+}
+<link href="~/Content/ValidationStyle.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+    </div>
+    <div class="row">
+        @* server tarafında beklenilen bir komut bu olmazsa post işlemlerini yapmaz *@
+        @using (Html.BeginForm("EditProfile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-horizantal d-flex justify-content-center">
+                <div class="col-md-3 me-4 ">
+                    <img src="~/images/@Model.ProfileImageFileName" alt="" width="128" height="128" class="rounded-circle" />
+                    <br />
+                    <br />
+                    <input type="file" id="ProfileImage" name="ProfileImage" class="form-control" />
+                    <span>&nbsp;</span>
+                    <span>
+                        <i>Lütfen .jpeg,.jpg veya png formatını kullanın.</i>
+                    </span>
+                </div>
+                <div class="col-md-5" style="text-align:center">
+                    @Html.ValidationSummary(false) @*formda ve arka planda oluşabilecek hataları getiriyor*@
+                    @Html.HiddenFor(model => model.Id) @*modelle beraber id de gitsin içerden gitsin ama*@
+                   
+
+                    <div class="row">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" }) @*db deki isimleri gösterecek (entitydeki name)*@
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { HtmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "form-label col-md-2" }) @*db deki isimleri gösterecek (entitydeki name)*@
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Surname, new { HtmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "form-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Username, new { HtmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Password, new { HtmlAttributes = new { @class = "form-control", Type = "password" } })
+                        </div>
+                    </div>
+                    <div class="row">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { HtmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 d-flex justify-content mt-4">
+                        @*baştan veya sondan belirli bir boşluk bırakır*@
+                        <div class="col-md-10">
+                            <input type="submit" value="value" name="kaydet" class="btn btn-success me-3" />
+                            @Html.ActionLink("Iptal", "ShowProfile", "Home", null, new { @class = "btn btn-dark" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
