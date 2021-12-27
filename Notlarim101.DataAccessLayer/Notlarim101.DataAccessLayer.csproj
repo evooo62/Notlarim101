@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="EntityFramework\MyInitializer.cs" />
     <Compile Include="EntityFramework\NotlarimContext.cs" />
     <Compile Include="EntityFramework\Repository.cs" />
@@ -78,6 +77,9 @@
       <Project>{a65ace9d-842f-41be-a9f6-8c90bcd838f4}</Project>
       <Name>Notlarim101.Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abstract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Notlarim101.Common;
 using Notlarim101.Core.DataAccess;
 using Notlarim101.DataAccessLayer;
-using Notlarim101.DataAccessLayer.Abstract;
+
 using Notlarim101.Entity;
 
 namespace Notlarim101.DataAccessLayer.EntityFramework
@@ -36,9 +36,9 @@ namespace Notlarim101.DataAccessLayer.EntityFramework
         {
             return objSet.Where(where).ToList();
         }
-        public IQueryable<T> QList(Expression<Func<T, bool>> query)
+        public IQueryable<T> QList()
         {
-            return objSet.Where(query);
+            return objSet.AsQueryable<T>();
         }
 
         public int Insert(T obj)///Calisma mantigi sorulacak

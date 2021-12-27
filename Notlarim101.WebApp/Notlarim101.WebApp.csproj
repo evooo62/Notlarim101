@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -186,6 +187,11 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\EditProfile.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -195,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +212,10 @@
     <ProjectReference Include="..\Notlarim101.Common\Notlarim101.Common.csproj">
       <Project>{17a885a1-3523-4055-9581-11950589c215}</Project>
       <Name>Notlarim101.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Notlarim101.Core\Notlarim101.Core.csproj">
+      <Project>{19e14e29-bb0a-4c59-a6aa-ad11b29ce6b7}</Project>
+      <Name>Notlarim101.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Notlarim101.Entity\Notlarim101.Entity.csproj">
       <Project>{a65ace9d-842f-41be-a9f6-8c90bcd838f4}</Project>
